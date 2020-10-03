@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ContaPoupancaEditDlg" widgetVar="ContaPoupancaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditContaPoupancaTitle}">
+            <h:form id="ContaPoupancaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{contaPoupancaController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditContaPoupancaLabel_diaAniversario}" for="diaAniversario" />
+                        <p:inputText id="diaAniversario" value="#{contaPoupancaController.selected.diaAniversario}" title="#{bundle.EditContaPoupancaTitle_diaAniversario}" required="true" requiredMessage="#{bundle.EditContaPoupancaRequiredMessage_diaAniversario}"/>
+                        <p:outputLabel value="#{bundle.EditContaPoupancaLabel_numero}" for="numero" />
+                        <p:inputText id="numero" value="#{contaPoupancaController.selected.numero}" title="#{bundle.EditContaPoupancaTitle_numero}" />
+                        <p:outputLabel value="#{bundle.EditContaPoupancaLabel_saldo}" for="saldo" />
+                        <p:inputText id="saldo" value="#{contaPoupancaController.selected.saldo}" title="#{bundle.EditContaPoupancaTitle_saldo}" required="true" requiredMessage="#{bundle.EditContaPoupancaRequiredMessage_saldo}"/>
+                        <p:outputLabel value="#{bundle.EditContaPoupancaLabel_nome}" for="nome" />
+                        <p:inputText id="nome" value="#{contaPoupancaController.selected.nome}" title="#{bundle.EditContaPoupancaTitle_nome}" />
+                        <p:outputLabel value="#{bundle.EditContaPoupancaLabel_senha}" for="senha" />
+                        <p:inputText id="senha" value="#{contaPoupancaController.selected.senha}" title="#{bundle.EditContaPoupancaTitle_senha}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{contaPoupancaController.update}" value="#{bundle.Save}" update="display,:ContaPoupancaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ContaPoupancaEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ContaPoupancaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

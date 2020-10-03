@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ContaCreateDlg" widgetVar="ContaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateContaTitle}">
+            <h:form id="ContaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{contaController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateContaLabel_numero}" for="numero" />
+                        <p:inputText id="numero" value="#{contaController.selected.numero}" title="#{bundle.CreateContaTitle_numero}" />
+                        <p:outputLabel value="#{bundle.CreateContaLabel_saldo}" for="saldo" />
+                        <p:inputText id="saldo" value="#{contaController.selected.saldo}" title="#{bundle.CreateContaTitle_saldo}" required="true" requiredMessage="#{bundle.CreateContaRequiredMessage_saldo}"/>
+                        <p:outputLabel value="#{bundle.CreateContaLabel_nome}" for="nome" />
+                        <p:inputText id="nome" value="#{contaController.selected.nome}" title="#{bundle.CreateContaTitle_nome}" />
+                        <p:outputLabel value="#{bundle.CreateContaLabel_senha}" for="senha" />
+                        <p:inputText id="senha" value="#{contaController.selected.senha}" title="#{bundle.CreateContaTitle_senha}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{contaController.create}" value="#{bundle.Save}" update="display,:ContaListForm:datalist,:growl" oncomplete="handleSubmit(args,'ContaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ContaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

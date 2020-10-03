@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ContaCorrenteViewDlg" widgetVar="ContaCorrenteViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewContaCorrenteTitle}">
+            <h:form id="ContaCorrenteViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{contaCorrenteController.selected != null}">
+                        <h:outputText value="#{bundle.ViewContaCorrenteLabel_numero}"/>
+                        <h:outputText value="#{contaCorrenteController.selected.numero}" title="#{bundle.ViewContaCorrenteTitle_numero}"/>
+                        <h:outputText value="#{bundle.ViewContaCorrenteLabel_saldo}"/>
+                        <h:outputText value="#{contaCorrenteController.selected.saldo}" title="#{bundle.ViewContaCorrenteTitle_saldo}"/>
+                        <h:outputText value="#{bundle.ViewContaCorrenteLabel_nome}"/>
+                        <h:outputText value="#{contaCorrenteController.selected.nome}" title="#{bundle.ViewContaCorrenteTitle_nome}"/>
+                        <h:outputText value="#{bundle.ViewContaCorrenteLabel_senha}"/>
+                        <h:outputText value="#{contaCorrenteController.selected.senha}" title="#{bundle.ViewContaCorrenteTitle_senha}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ContaCorrenteViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

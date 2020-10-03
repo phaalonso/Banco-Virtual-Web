@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ContaEspecialViewDlg" widgetVar="ContaEspecialViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewContaEspecialTitle}">
+            <h:form id="ContaEspecialViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{contaEspecialController.selected != null}">
+                        <h:outputText value="#{bundle.ViewContaEspecialLabel_limite}"/>
+                        <h:outputText value="#{contaEspecialController.selected.limite}" title="#{bundle.ViewContaEspecialTitle_limite}"/>
+                        <h:outputText value="#{bundle.ViewContaEspecialLabel_numero}"/>
+                        <h:outputText value="#{contaEspecialController.selected.numero}" title="#{bundle.ViewContaEspecialTitle_numero}"/>
+                        <h:outputText value="#{bundle.ViewContaEspecialLabel_saldo}"/>
+                        <h:outputText value="#{contaEspecialController.selected.saldo}" title="#{bundle.ViewContaEspecialTitle_saldo}"/>
+                        <h:outputText value="#{bundle.ViewContaEspecialLabel_nome}"/>
+                        <h:outputText value="#{contaEspecialController.selected.nome}" title="#{bundle.ViewContaEspecialTitle_nome}"/>
+                        <h:outputText value="#{bundle.ViewContaEspecialLabel_senha}"/>
+                        <h:outputText value="#{contaEspecialController.selected.senha}" title="#{bundle.ViewContaEspecialTitle_senha}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ContaEspecialViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

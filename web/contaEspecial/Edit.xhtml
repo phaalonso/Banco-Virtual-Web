@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ContaEspecialEditDlg" widgetVar="ContaEspecialEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditContaEspecialTitle}">
+            <h:form id="ContaEspecialEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{contaEspecialController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditContaEspecialLabel_limite}" for="limite" />
+                        <p:inputText id="limite" value="#{contaEspecialController.selected.limite}" title="#{bundle.EditContaEspecialTitle_limite}" required="true" requiredMessage="#{bundle.EditContaEspecialRequiredMessage_limite}"/>
+                        <p:outputLabel value="#{bundle.EditContaEspecialLabel_numero}" for="numero" />
+                        <p:inputText id="numero" value="#{contaEspecialController.selected.numero}" title="#{bundle.EditContaEspecialTitle_numero}" />
+                        <p:outputLabel value="#{bundle.EditContaEspecialLabel_saldo}" for="saldo" />
+                        <p:inputText id="saldo" value="#{contaEspecialController.selected.saldo}" title="#{bundle.EditContaEspecialTitle_saldo}" required="true" requiredMessage="#{bundle.EditContaEspecialRequiredMessage_saldo}"/>
+                        <p:outputLabel value="#{bundle.EditContaEspecialLabel_nome}" for="nome" />
+                        <p:inputText id="nome" value="#{contaEspecialController.selected.nome}" title="#{bundle.EditContaEspecialTitle_nome}" />
+                        <p:outputLabel value="#{bundle.EditContaEspecialLabel_senha}" for="senha" />
+                        <p:inputText id="senha" value="#{contaEspecialController.selected.senha}" title="#{bundle.EditContaEspecialTitle_senha}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{contaEspecialController.update}" value="#{bundle.Save}" update="display,:ContaEspecialListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ContaEspecialEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ContaEspecialEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

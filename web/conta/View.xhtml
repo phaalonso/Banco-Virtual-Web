@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ContaViewDlg" widgetVar="ContaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewContaTitle}">
+            <h:form id="ContaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{contaController.selected != null}">
+                        <h:outputText value="#{bundle.ViewContaLabel_numero}"/>
+                        <h:outputText value="#{contaController.selected.numero}" title="#{bundle.ViewContaTitle_numero}"/>
+                        <h:outputText value="#{bundle.ViewContaLabel_saldo}"/>
+                        <h:outputText value="#{contaController.selected.saldo}" title="#{bundle.ViewContaTitle_saldo}"/>
+                        <h:outputText value="#{bundle.ViewContaLabel_nome}"/>
+                        <h:outputText value="#{contaController.selected.nome}" title="#{bundle.ViewContaTitle_nome}"/>
+                        <h:outputText value="#{bundle.ViewContaLabel_senha}"/>
+                        <h:outputText value="#{contaController.selected.senha}" title="#{bundle.ViewContaTitle_senha}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ContaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
