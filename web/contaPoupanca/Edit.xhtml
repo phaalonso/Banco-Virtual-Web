@@ -13,13 +13,15 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{contaPoupancaController.selected != null}">
                         <p:outputLabel value="#{bundle.EditContaPoupancaLabel_diaAniversario}" for="diaAniversario" />
+                        
                         <p:inputText id="diaAniversario" value="#{contaPoupancaController.selected.diaAniversario}" title="#{bundle.EditContaPoupancaTitle_diaAniversario}" required="true" requiredMessage="#{bundle.EditContaPoupancaRequiredMessage_diaAniversario}"/>
+                        
                         <p:outputLabel value="#{bundle.EditContaPoupancaLabel_numero}" for="numero" />
-                        <p:inputText id="numero" value="#{contaPoupancaController.selected.numero}" title="#{bundle.EditContaPoupancaTitle_numero}" />
-                        <p:outputLabel value="#{bundle.EditContaPoupancaLabel_saldo}" for="saldo" />
-                        <p:inputText id="saldo" value="#{contaPoupancaController.selected.saldo}" title="#{bundle.EditContaPoupancaTitle_saldo}" required="true" requiredMessage="#{bundle.EditContaPoupancaRequiredMessage_saldo}"/>
+                        <p:inputText id="numero" value="#{contaPoupancaController.selected.numero}" readonly="true" title="#{bundle.EditContaPoupancaTitle_numero}" />
+                        
                         <p:outputLabel value="#{bundle.EditContaPoupancaLabel_nome}" for="nome" />
                         <p:inputText id="nome" value="#{contaPoupancaController.selected.nome}" title="#{bundle.EditContaPoupancaTitle_nome}" />
+                        
                         <p:outputLabel value="#{bundle.EditContaPoupancaLabel_senha}" for="senha" />
                         <p:inputText id="senha" value="#{contaPoupancaController.selected.senha}" title="#{bundle.EditContaPoupancaTitle_senha}" />
                     </p:panelGrid>

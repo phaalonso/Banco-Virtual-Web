@@ -13,11 +13,11 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{contaCorrenteController.selected != null}">
                         <p:outputLabel value="#{bundle.EditContaCorrenteLabel_numero}" for="numero" />
-                        <p:inputText id="numero" value="#{contaCorrenteController.selected.numero}" title="#{bundle.EditContaCorrenteTitle_numero}" />
-                        <p:outputLabel value="#{bundle.EditContaCorrenteLabel_saldo}" for="saldo" />
-                        <p:inputText id="saldo" value="#{contaCorrenteController.selected.saldo}" title="#{bundle.EditContaCorrenteTitle_saldo}" required="true" requiredMessage="#{bundle.EditContaCorrenteRequiredMessage_saldo}"/>
+                        <p:inputText id="numero" value="#{contaCorrenteController.selected.numero}" style="background: lightgray" readonly="true" title="#{bundle.EditContaCorrenteTitle_numero}" />
+                        
                         <p:outputLabel value="#{bundle.EditContaCorrenteLabel_nome}" for="nome" />
                         <p:inputText id="nome" value="#{contaCorrenteController.selected.nome}" title="#{bundle.EditContaCorrenteTitle_nome}" />
+                        
                         <p:outputLabel value="#{bundle.EditContaCorrenteLabel_senha}" for="senha" />
                         <p:inputText id="senha" value="#{contaCorrenteController.selected.senha}" title="#{bundle.EditContaCorrenteTitle_senha}" />
                     </p:panelGrid>

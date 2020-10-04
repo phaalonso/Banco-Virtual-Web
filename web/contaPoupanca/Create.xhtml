@@ -14,12 +14,13 @@
                     <p:panelGrid columns="2" rendered="#{contaPoupancaController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateContaPoupancaLabel_diaAniversario}" for="diaAniversario" />
                         <p:inputText id="diaAniversario" value="#{contaPoupancaController.selected.diaAniversario}" title="#{bundle.CreateContaPoupancaTitle_diaAniversario}" required="true" requiredMessage="#{bundle.CreateContaPoupancaRequiredMessage_diaAniversario}"/>
+                        
                         <p:outputLabel value="#{bundle.CreateContaPoupancaLabel_numero}" for="numero" />
                         <p:inputText id="numero" value="#{contaPoupancaController.selected.numero}" title="#{bundle.CreateContaPoupancaTitle_numero}" />
-                        <p:outputLabel value="#{bundle.CreateContaPoupancaLabel_saldo}" for="saldo" />
-                        <p:inputText id="saldo" value="#{contaPoupancaController.selected.saldo}" title="#{bundle.CreateContaPoupancaTitle_saldo}" required="true" requiredMessage="#{bundle.CreateContaPoupancaRequiredMessage_saldo}"/>
+                        
                         <p:outputLabel value="#{bundle.CreateContaPoupancaLabel_nome}" for="nome" />
                         <p:inputText id="nome" value="#{contaPoupancaController.selected.nome}" title="#{bundle.CreateContaPoupancaTitle_nome}" />
+                        
                         <p:outputLabel value="#{bundle.CreateContaPoupancaLabel_senha}" for="senha" />
                         <p:inputText id="senha" value="#{contaPoupancaController.selected.senha}" title="#{bundle.CreateContaPoupancaTitle_senha}" />
                     </p:panelGrid>
