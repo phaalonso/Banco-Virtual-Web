@@ -9,6 +9,7 @@ import br.edu.ifsp.pep.model.Conta;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -29,4 +30,15 @@ public class ContaDAO extends GenericoDAO<Conta> {
 		super(Conta.class);
 	}
 	
+	public Conta selectByNomeAndSenha(String nome, String senha) {
+		EntityManager em = getEntityManager();
+		
+		TypedQuery<Conta> query = em.createQuery("SELECT c FROM Conta c WHERE c.nome = :nome AND c.senha = :senha", Conta.class);
+		query.setParameter("nome", nome);
+		query.setParameter("senha", senha);
+		
+		Conta c = query.getSingleResult();
+		
+		return c;
+	}	
 }
