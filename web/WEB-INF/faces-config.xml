@@ -29,4 +29,9 @@
             <var>bundle</var>
         </resource-bundle>
     </application>
+	<lifecycle>
+		<phase-listener>
+			br.edu.ifsp.pep.listener.CicloDeVida
+		</phase-listener>
+	</lifecycle>
 </faces-config>

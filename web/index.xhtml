@@ -1,10 +1,26 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./newTemplate.xhtml">
-    <ui:define name="conteudo">
-        <div>
-            Eae men kkq
-        </div>
-    </ui:define>
-</ui:composition>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h1>Login</h1>
+        
+        <h:form>
+            <p:panelGrid columns="2">
+                Usuario:
+                <p:inputText id="usuario" value="${usuarioController.nome}" />
+                
+                Senha
+                <p:inputText id="senha" value="${usuarioController.senha}" />
+                
+            </p:panelGrid>
+            
+            <p:commandButton value="Logar" action="${usuarioController.logar()}" />
+        </h:form>
+    </h:body>
+</html>
+

@@ -24,13 +24,15 @@ public class UsuarioController implements Serializable {
 	private ContaDAO contaDAO;
 	
 	private String nome;
-	
 	private String senha;
 	
+	private Double valor;
+
 	private Conta contaAutenticada;
 
 	public UsuarioController() {
 		this.contaAutenticada = null;
+		this.valor = 0d;
 	}
 	
 	public void logar() {
@@ -42,6 +44,16 @@ public class UsuarioController implements Serializable {
 				System.out.println("Nome e senha não podem ser menor que zero");
 			}
 		}
+	}
+
+	public void depositar() {
+		if (this.valor > 0) {
+			this.contaAutenticada.depositar(valor);
+
+			this.contaDAO.edit(contaAutenticada);
+		}
+
+
 	}
 
 	public void setContaDAO(ContaDAO contaDAO) {
@@ -71,5 +83,12 @@ public class UsuarioController implements Serializable {
 	public void setContaAutenticada(Conta contaAutenticada) {
 		this.contaAutenticada = contaAutenticada;
 	}
-	
+
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
 }

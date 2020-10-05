@@ -40,5 +40,19 @@ public class ContaDAO extends GenericoDAO<Conta> {
 		Conta c = query.getSingleResult();
 		
 		return c;
-	}	
+	}
+
+	public void depoistar(Conta conta, Double valor) throws Exception {
+		if (valor > 0) {
+			conta.depositar(valor);
+
+			TypedQuery<Conta> query = em.createQuery("UPDATE Conta SET saldo = :depositoProcessado WHERE numero = :numero", Conta.class);
+
+			query.setParameter("depositoProcessado", conta.getSaldo());
+			query.setParameter("numero", conta.getNumero());
+			query.executeUpdate();
+		} else {
+			throw  new Exception("Valor de deposito negativo");
+		}		
+	}
 }
