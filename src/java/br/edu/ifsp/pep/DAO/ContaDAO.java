@@ -52,15 +52,38 @@ public class ContaDAO extends GenericoDAO<Conta> {
 
 	public Conta selectById(Integer id) {
 
-		TypedQuery<Conta> query = em.createQuery("SELECT c FROM Conta c WHERE numero = :numero", Conta.class);
+		TypedQuery<Conta> query = em.createQuery("SELECT c FROM Conta c WHERE c.numero = :numero", Conta.class);
 		query.setParameter("numero", id);
 		
 		return query.getSingleResult();
 	}
 
+	public void adicionarMovimentacao(Conta destino, Double valor, TipoMovimentacao tipo)  throws Exception{
+		Movimentacao mv = new Movimentacao();
+		destino.addMovimentacao(mv);
+		mv.setContaDestino(destino);
+		mv.setData(new Date());
+		mv.setTipo(tipo);
+		mv.setValor(valor);
+
+		em.persist(mv);
+	}
+
+	public void adicionarMovimentacao(Conta origem, Conta destino, Double valor, TipoMovimentacao tipo)  throws Exception{
+		Movimentacao mv = new Movimentacao();
+		destino.addMovimentacao(mv);
+		mv.setContaOrigem(origem);
+		mv.setContaDestino(destino);
+		mv.setData(new Date());
+		mv.setTipo(tipo);
+		mv.setValor(valor);
+
+		em.persist(mv);
+	}
+
 	public void sacar(Conta conta, Double valor) throws Exception {
 		if (valor > 0) {
-			conta = this.selectById(conta.getNumero());
+			conta = selectById(conta.getNumero());
 			
 			conta.sacar(valor);
 
@@ -70,14 +93,7 @@ public class ContaDAO extends GenericoDAO<Conta> {
 			query.setParameter("numero", conta.getNumero());
 			query.executeUpdate();
 
-			Movimentacao mv = new Movimentacao();
-			conta.addMovimentacao(mv);
-			mv.setContaDestino(conta);
-			mv.setData(new Date());
-			mv.setTipo(TipoMovimentacao.Saque);
-			mv.setValor(valor);
-
-			em.persist(mv);
+			adicionarMovimentacao(conta, valor, TipoMovimentacao.Saque);
 			
 			System.out.println("Saque realizado com sucesso");
 		} else {
@@ -87,6 +103,8 @@ public class ContaDAO extends GenericoDAO<Conta> {
 
 	public void depoistar(Conta conta, Double valor) throws Exception {
 		if (valor > 0) {
+			conta = selectById(conta.getNumero());
+
 			conta.depositar(valor);
 
 			TypedQuery<Conta> query = em.createQuery("UPDATE Conta SET saldo = :depositoProcessado WHERE numero = :numero", Conta.class);
@@ -95,17 +113,44 @@ public class ContaDAO extends GenericoDAO<Conta> {
 			query.setParameter("numero", conta.getNumero());
 			query.executeUpdate();
 
-			Movimentacao mv = new Movimentacao();
-			mv.setContaDestino(conta);
-			conta.addMovimentacao(mv);
-			mv.setData(new Date());
-			mv.setTipo(TipoMovimentacao.Deposito);
-			mv.setValor(valor);
+			adicionarMovimentacao(conta, valor, TipoMovimentacao.Deposito);
 
-			em.persist(mv);
 			System.out.println("Deposito realizado com sucesso");
 		} else {
 			throw  new Exception("Valor de deposito negativo");
 		}		
+	}
+
+	public void transferir(Conta contaOrigem, double valor, Integer idContaDestino) throws Exception {
+		if (contaOrigem.getNumero() != idContaDestino) {
+			if (valor > 0) {
+				contaOrigem = selectById(contaOrigem.getNumero());
+				
+				Conta cD = this.selectById(idContaDestino);
+
+				contaOrigem.retirarSaldo(valor);
+				cD.depositar(valor);
+
+				System.out.println("Saldo do destiono carai " + cD.getSaldo());
+
+				TypedQuery<Conta> query = em.createQuery("UPDATE Conta SET saldo = :depositoProcessado WHERE numero = :numero", Conta.class);
+
+				query.setParameter("depositoProcessado", contaOrigem.getSaldo());
+				query.setParameter("numero", contaOrigem.getNumero());
+				query.executeUpdate();
+
+				TypedQuery<Conta> query2 = em.createQuery("UPDATE Conta SET saldo = :depositoProcessado WHERE numero = :numero", Conta.class);
+
+				query2.setParameter("depositoProcessado", cD.getSaldo());
+				query2.setParameter("numero", cD.getNumero());
+				query2.executeUpdate();
+
+				adicionarMovimentacao(contaOrigem, cD, valor, TipoMovimentacao.Transferencia);
+			} else {
+				System.out.println("Valor não é maior que 0");
+			}
+		} else {
+			System.out.println("Nao pode transferir para si mesmo");
+		}
 	}
 }

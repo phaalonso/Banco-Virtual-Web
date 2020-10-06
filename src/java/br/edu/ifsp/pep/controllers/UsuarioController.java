@@ -35,6 +35,8 @@ public class UsuarioController implements Serializable {
 
 	private Conta contaAutenticada;
 
+	private Integer idContaDestino;
+	
 	public UsuarioController() {
 		this.contaAutenticada = null;
 		this.valor = 0d;
@@ -99,6 +101,12 @@ public class UsuarioController implements Serializable {
 			}
 		}
 	}
+	
+	public void transferir() throws Exception {
+		if (this.valor > 0) {
+			this.contaDAO.transferir(contaAutenticada, valor, idContaDestino);
+		}
+	}
 
 	public void setContaDAO(ContaDAO contaDAO) {
 		this.contaDAO = contaDAO;
@@ -134,5 +142,13 @@ public class UsuarioController implements Serializable {
 
 	public void setValor(Double valor) {
 		this.valor = valor;
+	}
+
+	public Integer getIdContaDestino() {
+		return idContaDestino;
+	}
+
+	public void setIdContaDestino(Integer idContaDestino) {
+		this.idContaDestino = idContaDestino;
 	}
 }
