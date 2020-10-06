@@ -45,13 +45,19 @@ public class UsuarioController implements Serializable {
 			if (nome.length() > 0 && senha.length() > 0) {
 				contaAutenticada = contaDAO.selectByNomeAndSenha(nome, senha);
 
-				ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
+				if (contaAutenticada != null){
+					System.out.println(contaAutenticada.getMovimentacoes().size());
+					ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
 
-				try {
-					ex.redirect("conta/conta.xhtml");
-				} catch (IOException ex1) {
-					System.out.println("Não foi possivel redirecionar para a conta");
+					try {
+						ex.redirect("conta/conta.xhtml");
+					} catch (IOException ex1) {
+						System.out.println("Não foi possivel redirecionar para a conta");
+					}
+				} else {
+					System.out.println("Usuario não encontrado");
 				}
+
 			} else {
 				System.out.println("Nome e senha não podem ser menor que zero");
 			}

@@ -11,6 +11,7 @@ import br.edu.ifsp.pep.model.TipoMovimentacao;
 import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -34,19 +35,33 @@ public class ContaDAO extends GenericoDAO<Conta> {
 	}
 	
 	public Conta selectByNomeAndSenha(String nome, String senha) {
-		EntityManager em = getEntityManager();
+		try {
+			EntityManager em = getEntityManager();
+			
+			TypedQuery<Conta> query = em.createQuery("SELECT c FROM Conta c WHERE c.nome = :nome AND c.senha = :senha", Conta.class);
+			query.setParameter("nome", nome);
+			query.setParameter("senha", senha);
+			
+			Conta c = query.getSingleResult();
+			
+			return c;
+		} catch (NoResultException ex) {
+			return null;
+		}
+	}
+
+	public Conta selectById(Integer id) {
+
+		TypedQuery<Conta> query = em.createQuery("SELECT c FROM Conta c WHERE numero = :numero", Conta.class);
+		query.setParameter("numero", id);
 		
-		TypedQuery<Conta> query = em.createQuery("SELECT c FROM Conta c WHERE c.nome = :nome AND c.senha = :senha", Conta.class);
-		query.setParameter("nome", nome);
-		query.setParameter("senha", senha);
-		
-		Conta c = query.getSingleResult();
-		
-		return c;
+		return query.getSingleResult();
 	}
 
 	public void sacar(Conta conta, Double valor) throws Exception {
 		if (valor > 0) {
+			conta = this.selectById(conta.getNumero());
+			
 			conta.sacar(valor);
 
 			TypedQuery<Conta> query = em.createQuery("UPDATE Conta SET saldo = :saqueProcessado WHERE numero = :numero", Conta.class);

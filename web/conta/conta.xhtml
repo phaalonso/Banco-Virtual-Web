@@ -1,11 +1,61 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+				xmlns="http://www.w3.org/1999/xhtml"
                 template="./contaTemplate.xhtml"
-				xmlns:p="http://primefaces.org/ui">
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:h="http://xmlns.jcp.org/jsf/html"
+				xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="conteudo">
 		<p:outputLabel value="Saldo da conta: ${usuarioController.contaAutenticada.saldo}" />
+
+		<f:view>
+			<h:form>
+				<h1><h:outputText value="List"/></h1>
+				<p:dataTable value="#{usuarioController.contaAutenticada.movimentacoes}" var="item">
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Id"/>
+						</f:facet>
+						<h:outputText value="#{item.id}"/>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Data"/>
+						</f:facet>
+						<h:outputText value="#{item.data}">
+							<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Valor"/>
+						</f:facet>
+						<h:outputText value="#{item.valor}"/>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Tipo"/>
+						</f:facet>
+						<h:outputText value="#{item.tipo}"/>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="ContaOrigem"/>
+						</f:facet>
+						<h:outputText value="#{item.contaOrigem}"/>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="ContaDestino"/>
+						</f:facet>
+						<h:outputText value="#{item.contaDestino}"/>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</f:view>
+
     </ui:define>
 
 </ui:composition>
