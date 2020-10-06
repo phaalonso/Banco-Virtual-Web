@@ -46,6 +46,12 @@ public class UsuarioController implements Serializable {
 		}
 	}
 
+	public void deslogar() {
+		if (this.contaAutenticada != null) {
+			this.contaAutenticada = null;
+		}
+	}
+
 	public void depositar() {
 		if (this.valor > 0) {
 			this.contaAutenticada.depositar(valor);

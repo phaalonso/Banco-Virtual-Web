@@ -18,12 +18,13 @@
         <div id="left">
 	    <h:form id="menuForm">
 		    <p:menu toggleable="true">
-			<p:submenu label="CRUD">
-			    <p:menuitem outcome="conta" value="Home"/>
-			    <p:menuitem outcome="deposito" value="Depositar"/>
-			    <p:menuitem outcome="saque" value="Sacar"/>
-			    <p:menuitem outcome="transferencia" value="Transferencia"/>
-			</p:submenu>
+				<p:submenu label="CRUD">
+					<p:menuitem outcome="conta" value="Home"/>
+					<p:menuitem outcome="deposito" value="Depositar"/>
+					<p:menuitem outcome="saque" value="Sacar"/>
+					<p:menuitem outcome="transferencia" value="Transferencia"/>
+				</p:submenu>
+				<p:menuitem value="Sair" ajax="false" action="${usuarioController.deslogar()}" />
 		    </p:menu>
 	    </h:form>
         </div>
