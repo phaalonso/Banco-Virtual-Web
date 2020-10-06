@@ -56,6 +56,7 @@ public class ContaDAO extends GenericoDAO<Conta> {
 			query.executeUpdate();
 
 			Movimentacao mv = new Movimentacao();
+			conta.addMovimentacao(mv);
 			mv.setContaDestino(conta);
 			mv.setData(new Date());
 			mv.setTipo(TipoMovimentacao.Saque);
@@ -81,6 +82,7 @@ public class ContaDAO extends GenericoDAO<Conta> {
 
 			Movimentacao mv = new Movimentacao();
 			mv.setContaDestino(conta);
+			conta.addMovimentacao(mv);
 			mv.setData(new Date());
 			mv.setTipo(TipoMovimentacao.Deposito);
 			mv.setValor(valor);
