@@ -7,9 +7,14 @@ package br.edu.ifsp.pep.controllers;
 
 import br.edu.ifsp.pep.DAO.ContaDAO;
 import br.edu.ifsp.pep.model.Conta;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
@@ -26,7 +31,7 @@ public class UsuarioController implements Serializable {
 	private String nome;
 	private String senha;
 	
-	private Double valor;
+	private double valor;
 
 	private Conta contaAutenticada;
 
@@ -39,7 +44,14 @@ public class UsuarioController implements Serializable {
 		if (contaAutenticada == null) {
 			if (nome.length() > 0 && senha.length() > 0) {
 				contaAutenticada = contaDAO.selectByNomeAndSenha(nome, senha);
-				System.out.println("Usuario logado!");
+
+				ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
+
+				try {
+					ex.redirect("conta/conta.xhtml");
+				} catch (IOException ex1) {
+					System.out.println("Não foi possivel redirecionar para a conta");
+				}
 			} else {
 				System.out.println("Nome e senha não podem ser menor que zero");
 			}
@@ -49,17 +61,37 @@ public class UsuarioController implements Serializable {
 	public void deslogar() {
 		if (this.contaAutenticada != null) {
 			this.contaAutenticada = null;
+
+			ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+
+			try {
+				ec.redirect("../");
+			} catch (IOException ex) {
+				System.out.println("Não foi possivel redirecionar para login");
+			}
 		}
 	}
 
 	public void depositar() {
 		if (this.valor > 0) {
-			this.contaAutenticada.depositar(valor);
-
-			this.contaDAO.edit(contaAutenticada);
+			try {
+				this.contaDAO.depoistar(contaAutenticada, valor);
+				valor = 0d;
+			} catch (Exception ex) {
+				Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+			}
 		}
+	}
 
-
+	public void sacar() {
+		if (this.valor > 0) {
+			try {
+				this.contaDAO.sacar(contaAutenticada, this.valor);
+				this.valor = 0d;
+			} catch (Exception ex) {
+				Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
 	}
 
 	public void setContaDAO(ContaDAO contaDAO) {

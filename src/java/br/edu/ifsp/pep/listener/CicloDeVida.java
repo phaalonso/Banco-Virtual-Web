@@ -7,6 +7,8 @@ package br.edu.ifsp.pep.listener;
 
 import br.edu.ifsp.pep.controllers.UsuarioController;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
@@ -29,13 +31,24 @@ public class CicloDeVida implements PhaseListener {
 
 			System.out.println(request.getServletPath());
 
-			if(request.getServletPath().contains("conta") && usuarioController.getContaAutenticada() == null) {
-				System.out.println("Redirecionando");
-				
-				try {
-					event.getFacesContext().getExternalContext().redirect("../index.xhtml");
-				} catch(IOException ex) {
-					System.out.println("Erro ao redirecionar o usuário");
+			if (usuarioController.getContaAutenticada() == null) {
+				if(request.getServletPath().contains("conta")) {
+					System.out.println("Redirecionando");
+					
+					try {
+						event.getFacesContext().getExternalContext().redirect("../index.xhtml");
+					} catch(IOException ex) {
+						System.out.println("Erro ao redirecionar o usuário");
+					}
+				}
+			} else {
+				//Autenticado
+				if (request.getServletPath().equals("login.xhtml")) {
+					try {
+						event.getFacesContext().getExternalContext().redirect("conta/conta.xhtml");
+					} catch (IOException ex) {
+						System.out.println("Erro ao redirecionar para a pagina da conta");
+					}
 				}
 			}
 		}
@@ -49,7 +62,6 @@ public class CicloDeVida implements PhaseListener {
 
 	@Override
 	public void afterPhase(PhaseEvent event) {
-		System.out.println("Depois da fase -----------------");
 	}
 	
 	
