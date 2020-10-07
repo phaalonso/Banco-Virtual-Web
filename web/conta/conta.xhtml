@@ -10,6 +10,7 @@
     <ui:define name="conteudo">
 		<p:outputLabel value="Saldo da conta: ${usuarioController.contaAutenticada.saldo}" />
 
+
 		<f:view>
 			<h:form>
 				<h1><h:outputText value="List"/></h1>
@@ -56,6 +57,7 @@
 			</h:form>
 		</f:view>
 
+		<p:chart type="line" model="#{movimentacaoView.getModel(usuarioController.contaAutenticada.numero)}" style="height:300px"/>
     </ui:define>
 
 </ui:composition>
