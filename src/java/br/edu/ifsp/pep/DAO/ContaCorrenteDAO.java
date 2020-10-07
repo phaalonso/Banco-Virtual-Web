@@ -17,14 +17,6 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class ContaCorrenteDAO extends GenericoDAO<ContaCorrente> {
 
-	@PersistenceContext(unitName = "BancoVirtualWebPU")
-	private EntityManager em;
-
-	@Override
-	protected EntityManager getEntityManager() {
-		return em;
-	}
-
 	public ContaCorrenteDAO() {
 		super(ContaCorrente.class);
 	}

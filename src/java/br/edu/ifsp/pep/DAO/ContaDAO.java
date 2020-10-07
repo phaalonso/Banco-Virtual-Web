@@ -22,14 +22,6 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class ContaDAO extends GenericoDAO<Conta> {
 
-	@PersistenceContext(unitName = "BancoVirtualWebPU")
-	private EntityManager em;
-
-	@Override
-	protected EntityManager getEntityManager() {
-		return em;
-	}
-
 	public ContaDAO() {
 		super(Conta.class);
 	}
@@ -62,6 +54,7 @@ public class ContaDAO extends GenericoDAO<Conta> {
 		Movimentacao mv = new Movimentacao();
 		destino.addMovimentacao(mv);
 		mv.setContaDestino(destino);
+		mv.setContaOrigem(destino);
 		mv.setData(new Date());
 		mv.setTipo(tipo);
 		mv.setValor(valor);

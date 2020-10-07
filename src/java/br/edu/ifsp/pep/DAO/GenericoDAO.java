@@ -7,6 +7,7 @@ package br.edu.ifsp.pep.DAO;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -16,11 +17,16 @@ public abstract class GenericoDAO<T> {
 
 	private Class<T> entityClass;
 
+	@PersistenceContext(unitName = "BancoVirtualWebPU")
+	protected EntityManager em;
+
 	public GenericoDAO(Class<T> entityClass) {
 		this.entityClass = entityClass;
 	}
 
-	protected abstract EntityManager getEntityManager();
+	protected EntityManager getEntityManager() {
+		return em;
+	}
 
 	public void create(T entity) {
 		getEntityManager().persist(entity);

@@ -17,14 +17,6 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class ContaEspecialDAO extends GenericoDAO<ContaEspecial> {
 
-	@PersistenceContext(unitName = "BancoVirtualWebPU")
-	private EntityManager em;
-
-	@Override
-	protected EntityManager getEntityManager() {
-		return em;
-	}
-
 	public ContaEspecialDAO() {
 		super(ContaEspecial.class);
 	}

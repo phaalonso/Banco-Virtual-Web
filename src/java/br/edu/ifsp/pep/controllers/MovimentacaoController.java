@@ -55,6 +55,8 @@ public class MovimentacaoController implements Serializable {
 		return selected;
 	}
 
+
+
 	public void create() {
 		persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("MovimentacaoCreated"));
 		if (!JsfUtil.isValidationFailed()) {
