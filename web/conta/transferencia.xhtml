@@ -13,7 +13,7 @@
 
 
 				<p:outputLabel for="valor" value="Valor da transferencia: " />
-				<p:inputNumber id="valor" value="${usuarioController.valor}" minValue="0" />
+				<p:inputNumber id="valor" value="${usuarioController.valor}" minValue="0" required="true" />
 
 				<p:commandButton value="Transferir" action="${usuarioController.transferir()}" />
 			</h:panelGrid>

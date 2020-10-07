@@ -9,7 +9,7 @@
 		<h:form>
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:outputLabel for="valor" value="Valor do depósito: " />
-				<p:inputNumber id="valor" value="${usuarioController.valor}" minValue="0" />
+				<p:inputNumber id="valor" value="${usuarioController.valor}" minValue="0" required="true" />
 
 				<p:commandButton value="Depositar" action="${usuarioController.depositar}" />
 			</h:panelGrid>
