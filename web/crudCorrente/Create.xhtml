@@ -12,9 +12,6 @@
             <h:form id="ContaCorrenteCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{contaCorrenteController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateContaCorrenteLabel_numero}" for="numero" />
-                        <p:inputText id="numero" value="#{contaCorrenteController.selected.numero}" title="#{bundle.CreateContaCorrenteTitle_numero}" />
-                        
                         <p:outputLabel value="#{bundle.CreateContaCorrenteLabel_nome}" for="nome" />
                         <p:inputText id="nome" value="#{contaCorrenteController.selected.nome}" title="#{bundle.CreateContaCorrenteTitle_nome}" />
                         
