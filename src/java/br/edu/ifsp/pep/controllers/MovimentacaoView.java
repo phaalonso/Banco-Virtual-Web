@@ -7,8 +7,10 @@ package br.edu.ifsp.pep.controllers;
 
 import br.edu.ifsp.pep.DAO.MovimentacaoDAO;
 import br.edu.ifsp.pep.model.Movimentacao;
+import br.edu.ifsp.pep.model.TipoMovimentacao;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -16,6 +18,7 @@ import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.BarChartSeries;
 import org.primefaces.model.chart.LegendPlacement;
 import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
 
 /**
  *
@@ -27,7 +30,7 @@ public class MovimentacaoView implements Serializable {
 	@EJB
 	private	MovimentacaoDAO movimentacaoControllerAO;
 
-	private BarChartModel model;
+	private LineChartModel model;
 
 	private List<Movimentacao> itens;
 
@@ -43,40 +46,24 @@ public class MovimentacaoView implements Serializable {
 		this.movimentacaoControllerAO = movimentacaoControllerAO;
 	}
 
-	public BarChartModel getModel(Integer idContaOrigem) {
-		this.model = new BarChartModel();
+	public LineChartModel getModel(Integer idContaOrigem) {
+		this.model = new LineChartModel();
 
-		model.setTitle("Montante de movimentações por operação");
+		model.setTitle("Valores de transações e seus tipos");
 		model.setLegendPosition("e");
 		model.setLegendPlacement(LegendPlacement.OUTSIDE);
 		
 		List<Movimentacao> movimentacoes = movimentacaoControllerAO.selectByContaOrigem(idContaOrigem);
 
-		BarChartSeries depositosS = new BarChartSeries();
-		BarChartSeries saqueS = new BarChartSeries();
-		BarChartSeries transferenciaS = new BarChartSeries();
+		LineChartSeries depositosS = new LineChartSeries();
+		LineChartSeries saqueS = new LineChartSeries();
+		LineChartSeries transferenciaS = new LineChartSeries();
 
-		depositosS.setLabel("Depósito");
+		depositosS.setLabel("Depósitos");
 		saqueS.setLabel("Saque");
 		transferenciaS.setLabel("Transferencia");
 		
 		//TODO ARRUMAR GRAFICO
-		int deposito = 0;
-		int saque = 0;
-		int transferencia = 0;
-		for(Movimentacao mv: movimentacoes) {
-			switch(mv.getTipo()) {
-				case Deposito:
-					depositosS.set(++deposito, mv.getValor());
-					break;
-				case Saque:
-					saqueS.set(++saque, mv.getValor());
-					break;
-				case Transferencia:
-					transferenciaS.set(++transferencia, mv.getValor());
-					break;
-			}
-		}
 
 		model.addSeries(saqueS);
 		model.addSeries(depositosS);
@@ -85,7 +72,7 @@ public class MovimentacaoView implements Serializable {
 		return model;
 	}
 
-	public void setModel(BarChartModel model) {
+	public void setModel(LineChartModel model) {
 		this.model = model;
 	}
 }
