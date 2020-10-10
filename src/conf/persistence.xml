@@ -8,6 +8,7 @@
     <class>br.edu.ifsp.pep.model.ContaEspecial</class>
     <class>br.edu.ifsp.pep.model.ContaPoupanca</class>
     <class>br.edu.ifsp.pep.model.Movimentacao</class>
+    <class>br.edu.ifsp.pep.model.Admin</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
