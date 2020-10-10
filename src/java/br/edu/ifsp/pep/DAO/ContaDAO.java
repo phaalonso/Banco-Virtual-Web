@@ -145,12 +145,4 @@ public class ContaDAO extends GenericoDAO<Conta> {
 			System.out.println("Nao pode transferir para si mesmo");
 		}
 	}
-
-	public void cadastrarAdemir(Conta ademir) {
-		try {
-			em.persist(ademir);
-		} catch (Exception ex) {
-			System.out.println(ex);
-		}
-	}
 }

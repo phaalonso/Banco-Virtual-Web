@@ -6,7 +6,7 @@
  */
 package br.edu.ifsp.pep.DAO;
 
-import br.edu.ifsp.pep.model.ContaCorrente;
+import br.edu.ifsp.pep.model.Admin;
 import javax.ejb.Stateless;
 
 /**
@@ -14,10 +14,19 @@ import javax.ejb.Stateless;
  * @author pedro
  */
 @Stateless
-public class ContaCorrenteDAO extends GenericoDAO<ContaCorrente> {
+public class AdministradorDAO extends GenericoDAO<Admin> {
 
-	public ContaCorrenteDAO() {
-		super(ContaCorrente.class);
+	public AdministradorDAO() {
+		super(Admin.class);
+	}
+
+	public void cadastrar(Admin admin) {
+		try {
+			em.persist(admin);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
 	}
 	
 }

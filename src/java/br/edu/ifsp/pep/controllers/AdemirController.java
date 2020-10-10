@@ -5,6 +5,7 @@
  */
 package br.edu.ifsp.pep.controllers;
 
+import br.edu.ifsp.pep.DAO.AdministradorDAO;
 import br.edu.ifsp.pep.DAO.ContaDAO;
 import br.edu.ifsp.pep.model.Admin;
 import br.edu.ifsp.pep.model.ContaCorrente;
@@ -26,7 +27,7 @@ public class AdemirController implements Serializable{
 	private UsuarioController usuarioC;
 
 	@EJB
-	private ContaDAO db;
+	private AdministradorDAO db;
 
 	private Admin conta;
 	
@@ -35,7 +36,7 @@ public class AdemirController implements Serializable{
 	}
 
 	public void cadastrarAdemir() {
-		db.cadastrarAdemir(conta);
+		db.cadastrar(conta);
 	}	
 	
 	public UsuarioController getUsuarioC() {
