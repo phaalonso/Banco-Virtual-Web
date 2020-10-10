@@ -30,7 +30,7 @@ public class MovimentacaoView implements Serializable {
 	@EJB
 	private	MovimentacaoDAO movimentacaoControllerAO;
 
-	private LineChartModel model;
+	private BarChartModel model;
 
 	private List<Movimentacao> itens;
 
@@ -46,24 +46,40 @@ public class MovimentacaoView implements Serializable {
 		this.movimentacaoControllerAO = movimentacaoControllerAO;
 	}
 
-	public LineChartModel getModel(Integer idContaOrigem) {
-		this.model = new LineChartModel();
+public BarChartModel getModel(Integer idContaOrigem) {
+		this.model = new BarChartModel();
 
-		model.setTitle("Valores de transações e seus tipos");
+		model.setTitle("Montante de movimentações por operação");
 		model.setLegendPosition("e");
 		model.setLegendPlacement(LegendPlacement.OUTSIDE);
 		
 		List<Movimentacao> movimentacoes = movimentacaoControllerAO.selectByContaOrigem(idContaOrigem);
 
-		LineChartSeries depositosS = new LineChartSeries();
-		LineChartSeries saqueS = new LineChartSeries();
-		LineChartSeries transferenciaS = new LineChartSeries();
+		BarChartSeries depositosS = new BarChartSeries();
+		BarChartSeries saqueS = new BarChartSeries();
+		BarChartSeries transferenciaS = new BarChartSeries();
 
-		depositosS.setLabel("Depósitos");
+		depositosS.setLabel("Depósito");
 		saqueS.setLabel("Saque");
 		transferenciaS.setLabel("Transferencia");
 		
 		//TODO ARRUMAR GRAFICO
+		int deposito = 0;
+		int saque = 0;
+		int transferencia = 0;
+		for(Movimentacao mv: movimentacoes) {
+			switch(mv.getTipo()) {
+				case Deposito:
+					depositosS.set(++deposito, mv.getValor());
+					break;
+				case Saque:
+					saqueS.set(++saque, mv.getValor());
+					break;
+				case Transferencia:
+					transferenciaS.set(++transferencia, mv.getValor());
+					break;
+			}
+		}
 
 		model.addSeries(saqueS);
 		model.addSeries(depositosS);
@@ -71,8 +87,7 @@ public class MovimentacaoView implements Serializable {
 		
 		return model;
 	}
-
-	public void setModel(LineChartModel model) {
+	public void setModel(BarChartModel model) {
 		this.model = model;
 	}
 }

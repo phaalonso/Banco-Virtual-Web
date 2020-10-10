@@ -6,6 +6,7 @@
 package br.edu.ifsp.pep.controllers;
 
 import br.edu.ifsp.pep.DAO.ContaDAO;
+import br.edu.ifsp.pep.model.Admin;
 import br.edu.ifsp.pep.model.Conta;
 import java.io.IOException;
 import java.io.Serializable;
@@ -52,7 +53,10 @@ public class UsuarioController implements Serializable {
 					ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
 
 					try {
-						ex.redirect("conta/conta.xhtml");
+						if (contaAutenticada instanceof Admin)
+							ex.redirect("adminTemplate.xhtml");
+						else
+							ex.redirect("conta/conta.xhtml");
 					} catch (IOException ex1) {
 						System.out.println("Não foi possivel redirecionar para a conta");
 					}
