@@ -8,11 +8,10 @@
 				xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="conteudo">
-		<p:outputLabel value="Saldo da conta: ${usuarioController.contaAutenticada.saldo}" />
-
-
 		<f:view>
 			<h:form>
+				<p:outputLabel value="Saldo da conta: ${usuarioController.contaAutenticada.saldo}" />
+
 				<h1><h:outputText value="List"/></h1>
 				<p:dataTable value="#{movimentacaoView.getItens(usuarioController.contaAutenticada.numero)}" var="item">
 					<p:column>
@@ -57,7 +56,7 @@
 			</h:form>
 		</f:view>
 
-		<p:chart type="line" model="#{movimentacaoView.getModel(usuarioController.contaAutenticada.numero)}" style="height:300px"/>
+		<p:chart type="bar" model="#{movimentacaoView.getModel(usuarioController.contaAutenticada.numero)}" style="height:300px"/>
     </ui:define>
 
 </ui:composition>

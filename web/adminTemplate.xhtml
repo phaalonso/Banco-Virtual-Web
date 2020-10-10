@@ -27,9 +27,21 @@
 			</h:form>
         </div>
         <div id="conteudo" class="left_content">
-            <ui:insert name="conteudo">Content</ui:insert>
+            <ui:insert name="conteudo"></ui:insert>
         </div>
 
+
+        <h:form>
+			<h1>Cadastrar admin</h1>
+			<p:panelGrid columns="2">
+				Usuario
+				<p:inputText id="usuario" value="${ademirController.conta.nome}" /> 
+				Senha
+				<p:inputText id="senha" value="${ademirController.conta.senha}" />
+				
+			</p:panelGrid>
+			<p:commandButton value="Logar" action="${ademirController.cadastrarAdemir()}" />
+        </h:form>
     </h:body>
 
 </html>

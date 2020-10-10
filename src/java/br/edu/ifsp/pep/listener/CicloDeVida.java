@@ -6,9 +6,12 @@
 package br.edu.ifsp.pep.listener;
 
 import br.edu.ifsp.pep.controllers.UsuarioController;
+import br.edu.ifsp.pep.model.Admin;
+import br.edu.ifsp.pep.model.Conta;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.context.ExternalContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
@@ -29,27 +32,29 @@ public class CicloDeVida implements PhaseListener {
 		if (event.getPhaseId() == PhaseId.RESTORE_VIEW) {
 			HttpServletRequest request = (HttpServletRequest) event.getFacesContext().getExternalContext().getRequest();
 
-			System.out.println(request.getServletPath());
+			String path = request.getServletPath();
+			System.out.println(path);
+			ExternalContext externalContext = event.getFacesContext().getExternalContext();
+			Conta usuarioLogado = usuarioController.getContaAutenticada();
 
-			if (usuarioController.getContaAutenticada() == null) {
-				if(request.getServletPath().contains("conta")) {
-					System.out.println("Redirecionando");
-					
-					try {
-						event.getFacesContext().getExternalContext().redirect("../index.xhtml");
-					} catch(IOException ex) {
-						System.out.println("Erro ao redirecionar o usuário");
+			try {
+				if (usuarioLogado != null) {
+					if (usuarioLogado instanceof Admin) {
+						if (path.contains("conta") || path.contains("index.xhtml"))
+							externalContext.redirect("adminTemplate.xhtml");
+					} else {
+						if (path.contains("admin") || path.contains("index.xhtml")) {
+							externalContext.redirect("conta/conta.xhtml");
+						}
 					}
-				}
-			} else {
-				//Autenticado
-				if (request.getServletPath().equals("login.xhtml")) {
-					try {
-						event.getFacesContext().getExternalContext().redirect("conta/conta.xhtml");
-					} catch (IOException ex) {
-						System.out.println("Erro ao redirecionar para a pagina da conta");
+				} else {
+					// Mantem usuario não logados na pagina index
+					if (!path.equals("/index.xhtml")) {
+						externalContext.redirect("index.xhtml");
 					}
-				}
+				} 
+			} catch (IOException ex) {
+				System.out.println("Erro ao redirecionar para a pagina da conta");
 			}
 		}
 		
