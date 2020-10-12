@@ -7,6 +7,7 @@
 
     <ui:define name="conteudo">
 		<h:form>
+			Saldo da conta: <h:outputText id="saldo" value="${usuarioController.contaAutenticada.saldo}"/>
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:outputLabel for="id" value="Id da conta destino: " />
 				<p:inputNumber id="id" value="${usuarioController.idContaDestino}" minValue="0" required="true" />
@@ -15,7 +16,7 @@
 				<p:outputLabel for="valor" value="Valor da transferencia: " />
 				<p:inputNumber id="valor" value="${usuarioController.valor}" minValue="0" required="true" />
 
-				<p:commandButton value="Transferir" action="${usuarioController.transferir()}" />
+				<p:commandButton value="Transferir" action="${usuarioController.transferir()}" update="@this saldo"/>
 			</h:panelGrid>
 		</h:form>
     </ui:define>

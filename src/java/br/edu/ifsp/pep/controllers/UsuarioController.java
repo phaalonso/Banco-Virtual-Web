@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -45,35 +46,30 @@ public class UsuarioController implements Serializable {
 	
 	public void logar() {
 		if (contaAutenticada == null) {
-			if (nome.length() > 0 && senha.length() > 0) {
-				contaAutenticada = contaDAO.selectByNomeAndSenha(nome, senha);
+			contaAutenticada = contaDAO.selectByNomeAndSenha(nome, senha);
 
-				if (nome.equals("admin") && senha.equals("admin") && contaAutenticada == null) {
-					Admin adm = new Admin();
-					adm.setNome("admin");
-					adm.setSenha("admin");
-					contaDAO.create(adm);
-					contaAutenticada = adm;
+			if (nome.equals("admin") && senha.equals("admin") && contaAutenticada == null) {
+				Admin adm = new Admin();
+				adm.setNome("admin");
+				adm.setSenha("admin");
+				contaDAO.create(adm);
+				contaAutenticada = adm;
+			}
+			
+			if (contaAutenticada != null){
+				System.out.println(contaAutenticada.getMovimentacoes().size());
+				ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
+
+				try {
+					if (contaAutenticada instanceof Admin)
+						ex.redirect("adminTemplate.xhtml");
+					else
+						ex.redirect("conta/conta.xhtml");
+				} catch (IOException ex1) {
+					System.out.println("Não foi possivel redirecionar para a conta");
 				}
-				
-				if (contaAutenticada != null){
-					System.out.println(contaAutenticada.getMovimentacoes().size());
-					ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
-
-					try {
-						if (contaAutenticada instanceof Admin)
-							ex.redirect("adminTemplate.xhtml");
-						else
-							ex.redirect("conta/conta.xhtml");
-					} catch (IOException ex1) {
-						System.out.println("Não foi possivel redirecionar para a conta");
-					}
-				} else {
-					System.out.println("Usuario não encontrado");
-				}
-
 			} else {
-				System.out.println("Nome e senha não podem ser menor que zero");
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Usuario nao encontrado", ""));
 			}
 		}
 	}
@@ -96,9 +92,13 @@ public class UsuarioController implements Serializable {
 		if (this.valor > 0) {
 			try {
 				this.contaDAO.depoistar(contaAutenticada, valor);
+				// Estou tendo algum problema estranho de escopo, o saldo do objeto dentro do método é atualizado
+				// no entando nesse escopo exterior ele permanece o mesmo
+				contaAutenticada = contaDAO.find(contaAutenticada.getNumero());
+				System.out.println(contaAutenticada);
 				valor = 0d;
 			} catch (Exception ex) {
-				Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Valor invalido", "Valor invalido"));
 			}
 		}
 	}
@@ -107,9 +107,10 @@ public class UsuarioController implements Serializable {
 		if (this.valor > 0) {
 			try {
 				this.contaDAO.sacar(contaAutenticada, this.valor);
+				contaAutenticada = contaDAO.find(contaAutenticada.getNumero());
 				this.valor = 0d;
 			} catch (Exception ex) {
-				Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Valor invalido", "Valor invalido"));
 			}
 		}
 	}
@@ -117,6 +118,8 @@ public class UsuarioController implements Serializable {
 	public void transferir() throws Exception {
 		if (this.valor > 0) {
 			this.contaDAO.transferir(contaAutenticada, valor, idContaDestino);
+			contaAutenticada = contaDAO.find(contaAutenticada.getNumero());
+			valor = 0d;
 		}
 	}
 

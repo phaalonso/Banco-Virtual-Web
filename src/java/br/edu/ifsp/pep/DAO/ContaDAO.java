@@ -80,7 +80,6 @@ public class ContaDAO extends GenericoDAO<Conta> {
 			conta.sacar(valor);
 
 			TypedQuery<Conta> query = em.createQuery("UPDATE Conta SET saldo = :saqueProcessado WHERE numero = :numero", Conta.class);
-
 			query.setParameter("saqueProcessado", conta.getSaldo());
 			query.setParameter("numero", conta.getNumero());
 			query.executeUpdate();
@@ -98,11 +97,11 @@ public class ContaDAO extends GenericoDAO<Conta> {
 			conta = selectById(conta.getNumero());
 
 			conta.depositar(valor);
+			System.out.println(conta);
 
-			TypedQuery<Conta> query = em.createQuery("UPDATE Conta SET saldo = :depositoProcessado WHERE numero = :numero", Conta.class);
-
-			query.setParameter("depositoProcessado", conta.getSaldo());
-			query.setParameter("numero", conta.getNumero());
+			TypedQuery<Conta> query = em.createQuery("UPDATE Conta SET saldo = :depositoProcessado WHERE numero = :numero", Conta.class)
+			.setParameter("depositoProcessado", conta.getSaldo())
+			.setParameter("numero", conta.getNumero());
 			query.executeUpdate();
 
 			adicionarMovimentacao(conta, valor, TipoMovimentacao.Deposito);

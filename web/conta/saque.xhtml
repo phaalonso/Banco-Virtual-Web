@@ -7,12 +7,14 @@
 
     <ui:define name="conteudo">
 		<h:form>
+			Saldo da conta: <h:outputText id="saldo" value="${usuarioController.contaAutenticada.saldo}"/>
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:outputLabel for="valor" value="Valor do saque: " />
-				<p:inputNumber id="valor" value="${usuarioController.valor}" minValue="0" required="true"/>
-											
-				<p:commandButton value="Sacar" action="${usuarioController.sacar}" />
+				<p:inputNumber id="valor" value="${usuarioController.valor}" minValue="0" required="true" requiredMessage="Campo valor é necessário"/>
 			</h:panelGrid>
+			<p:messages />
+										
+			<p:commandButton value="Sacar" action="${usuarioController.sacar}" update="@form saldo" />
 		</h:form>
     </ui:define>
 

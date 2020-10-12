@@ -36,9 +36,9 @@
 			<h1>Cadastrar admin</h1>
 			<p:panelGrid columns="2">
 				Usuario
-				<p:inputText id="usuario" value="${ademirController.conta.nome}" /> 
+				<p:inputText id="usuario" value="${ademirController.conta.nome}" required="true" requiredMessage="Campo usuario é necessário" /> 
 				Senha
-				<p:inputText id="senha" value="${ademirController.conta.senha}" />
+				<p:inputText id="senha" value="${ademirController.conta.senha}" required="true" requiredMessage="Campo senha é necessário" />
 				
 			</p:panelGrid>
 			<p:commandButton value="Logar" action="${ademirController.cadastrarAdemir()}" />
