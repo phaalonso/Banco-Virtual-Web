@@ -3,21 +3,29 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./contaTemplate.xhtml"
 				xmlns:p="http://primefaces.org/ui"
-				xmlns:h="http://xmlns.jcp.org/jsf/html">
+				xmlns:h="http://xmlns.jcp.org/jsf/html"
+				xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="conteudo">
 		<h:form>
-			Saldo da conta: <h:outputText id="saldo" value="${usuarioController.contaAutenticada.saldo}"/>
 			<h:panelGrid columns="2" cellpadding="5">
-				<p:outputLabel for="id" value="Id da conta destino: " />
-				<p:inputNumber id="id" value="${usuarioController.idContaDestino}" minValue="0" required="true" />
+				<p:outputLabel value="Saldo da conta:" /> 
+				<p:outputLabel id="saldo" value="${usuarioController.contaAutenticada.saldo}"> 
+					<f:convertNumber maxFractionDigits="2" />
+				</p:outputLabel>
 
+				<p:outputLabel for="id" value="Id da conta destino: " />
+				<p:inputNumber id="id" value="${usuarioController.idContaDestino}" decimalPlaces="0" minValue="0" required="true" requiredMessage="Campo Conta de destino é obrigatorio">
+					<p:ajax update="nomeDestino" />
+				</p:inputNumber>
+
+				<p:outputLabel value="Conta destino: " /> <p:outputLabel id="nomeDestino" value="${usuarioController.nomeContaDestino}" />
 
 				<p:outputLabel for="valor" value="Valor da transferencia: " />
-				<p:inputNumber id="valor" value="${usuarioController.valor}" minValue="0" required="true" />
-
-				<p:commandButton value="Transferir" action="${usuarioController.transferir()}" update="@this saldo"/>
+				<p:inputNumber id="valor" value="${usuarioController.valor}" minValue="0" required="true" requiredMessage="Valor de transferencia é obrigatório" />
 			</h:panelGrid>
+				<p:messages />
+				<p:commandButton value="Transferir" action="${usuarioController.transferir()}" update="@form saldo"/>
 		</h:form>
     </ui:define>
 

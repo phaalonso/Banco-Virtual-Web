@@ -8,6 +8,7 @@ package br.edu.ifsp.pep.controllers;
 import br.edu.ifsp.pep.DAO.ContaDAO;
 import br.edu.ifsp.pep.model.Admin;
 import br.edu.ifsp.pep.model.Conta;
+import br.edu.ifsp.pep.model.ContaPoupanca;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -33,11 +34,13 @@ public class UsuarioController implements Serializable {
 	private String nome;
 	private String senha;
 	
-	private double valor;
-
 	private Conta contaAutenticada;
 
+	private double valor;
+	private boolean renderer;
+
 	private Integer idContaDestino;
+	private String nomeConteDestino;
 	
 	public UsuarioController() {
 		this.contaAutenticada = null;
@@ -47,6 +50,7 @@ public class UsuarioController implements Serializable {
 	public void logar() {
 		if (contaAutenticada == null) {
 			contaAutenticada = contaDAO.selectByNomeAndSenha(nome, senha);
+			renderer = !(contaAutenticada instanceof ContaPoupanca);
 
 			if (nome.equals("admin") && senha.equals("admin") && contaAutenticada == null) {
 				Admin adm = new Admin();
@@ -112,6 +116,8 @@ public class UsuarioController implements Serializable {
 			} catch (Exception ex) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Valor invalido", "Valor invalido"));
 			}
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Valor deve ser superior a  0 reais" ,"Valor deve ser superior a  0 reais"));
 		}
 	}
 	
@@ -122,6 +128,15 @@ public class UsuarioController implements Serializable {
 			valor = 0d;
 		}
 	}
+
+	public boolean isRenderer() {
+		return renderer;
+	}
+
+	public void setRenderer(boolean renderer) {
+		this.renderer = renderer;
+	}
+	
 
 	public void setContaDAO(ContaDAO contaDAO) {
 		this.contaDAO = contaDAO;
@@ -159,11 +174,23 @@ public class UsuarioController implements Serializable {
 		this.valor = valor;
 	}
 
+	public Double getValorCPMF() {
+		return contaAutenticada.calcularCPMF(valor);
+	}
+
+
 	public Integer getIdContaDestino() {
 		return idContaDestino;
 	}
 
 	public void setIdContaDestino(Integer idContaDestino) {
 		this.idContaDestino = idContaDestino;
+	}
+
+	public String getNomeContaDestino() {
+		if (idContaDestino != null)
+			return contaDAO.find(idContaDestino).getNome();
+		else
+			return "";
 	}
 }
