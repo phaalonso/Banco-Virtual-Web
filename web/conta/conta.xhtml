@@ -10,7 +10,13 @@
     <ui:define name="conteudo">
 		<f:view>
 			<h:form>
-				Saldo da conta: <h:outputText id="saldo" value="${usuarioController.contaAutenticada.saldo}"/>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Saldo da conta:" /> 
+					<p:outputLabel id="saldo" value="${usuarioController.contaAutenticada.saldo}"> 
+						<f:convertNumber maxFractionDigits="2" />
+					</p:outputLabel>
+				</h:panelGrid>
+
 				<h1><h:outputText value="List"/></h1>
 				<p:dataTable value="#{movimentacaoView.getItens(usuarioController.contaAutenticada.numero)}" var="item">
 					<p:column>
