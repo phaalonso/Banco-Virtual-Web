@@ -11,13 +11,13 @@
 		<f:view>
 			<h:form>
 				<h:panelGrid columns="2">
-					<p:outputLabel value="Saldo da conta:" /> 
+					<p:outputLabel value="${bundle.ContaSaldo}" /> 
 					<p:outputLabel id="saldo" value="${usuarioController.contaAutenticada.saldo}"> 
 						<f:convertNumber maxFractionDigits="2" />
 					</p:outputLabel>
 				</h:panelGrid>
 
-				<h1><h:outputText value="List"/></h1>
+				<h1><h:outputText value="${bundle.ContaListaMovimentacoes}"/></h1>
 				<p:dataTable value="#{movimentacaoView.getItens(usuarioController.contaAutenticada.numero)}" var="item">
 					<p:column>
 						<f:facet name="header">
@@ -27,7 +27,7 @@
 					</p:column>
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="Data"/>
+							<h:outputText value="${bundle.ContaListaMovimentacoes_data}"/>
 						</f:facet>
 						<h:outputText value="#{item.data}">
 							<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
@@ -35,25 +35,25 @@
 					</p:column>
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="Valor"/>
+							<h:outputText value="${bundle.COntaListaMovimentacoes_valor}"/>
 						</f:facet>
 						<h:outputText value="#{item.valor}"/>
 					</p:column>
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="Tipo"/>
+							<h:outputText value="${bundle.ContaListaMovimentacoes_tipo}"/>
 						</f:facet>
 						<h:outputText value="#{item.tipo}"/>
 					</p:column>
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="ContaOrigem"/>
+							<h:outputText value="${bundle.ContaListaMovimentacoes_origem}"/>
 						</f:facet>
 						<h:outputText value="#{item.contaOrigem}"/>
 					</p:column>
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="ContaDestino"/>
+							<h:outputText value="${bundle.ContaListaMovimentacoes_destino}"/>
 						</f:facet>
 						<h:outputText value="#{item.contaDestino}"/>
 					</p:column>

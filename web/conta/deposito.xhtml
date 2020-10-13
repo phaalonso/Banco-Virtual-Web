@@ -9,17 +9,17 @@
     <ui:define name="conteudo">
 		<h:form>
 			<h:panelGrid columns="2" cellpadding="5">
-				<p:outputLabel value="Saldo da conta:" /> 
+				<p:outputLabel value="${bundle.ContaSaldo}" /> 
 				<p:outputLabel id="saldo" value="${usuarioController.contaAutenticada.saldo}"> 
 					<f:convertNumber maxFractionDigits="2" />
 				</p:outputLabel>
 
-				<p:outputLabel for="valor" value="Valor do depósito: " />
-				<p:inputNumber id="valor" value="${usuarioController.valor}" minValue="0" required="true" requiredMessage="Campo valro é necessário"/>
+				<p:outputLabel for="valor" value="${bundle.DepositoValor}" />
+				<p:inputNumber id="valor" value="${usuarioController.valor}" minValue="0" required="true" requiredMessage="${bundle.DepositoValorRequired}"/>
 			</h:panelGrid>
 
 			<p:messages />
-			<p:commandButton value="Depositar" action="${usuarioController.depositar}" update="@this saldo" />
+			<p:commandButton value="${bundle.DepositoBotao}" action="${usuarioController.depositar}" update="@this saldo" />
 		</h:form>
     </ui:define>
 

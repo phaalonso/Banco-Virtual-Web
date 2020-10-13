@@ -25,9 +25,14 @@
 	      xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd">
     <application>
         <resource-bundle>
-            <base-name>/Bundle</base-name>
+            <base-name>br.edu.ifsp.pep.messages.messages</base-name>
             <var>bundle</var>
         </resource-bundle>
+
+		<locale-config>
+			<default-locale>pt_BR</default-locale>
+			<supported-locale>en_US</supported-locale>
+		</locale-config>
     </application>
 	<lifecycle>
 		<phase-listener>

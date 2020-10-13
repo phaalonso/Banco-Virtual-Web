@@ -9,17 +9,17 @@
     <ui:define name="conteudo">
 		<h:form>
 			<h:panelGrid columns="2" cellpadding="5">
-				<p:outputLabel value="Saldo da conta:" /> 
+				<p:outputLabel value="${bundle.ContaSaldo}" /> 
 				<p:outputLabel id="saldo" value="${usuarioController.contaAutenticada.saldo}"> 
 					<f:convertNumber maxFractionDigits="2" />
 				</p:outputLabel>
 
-				<p:outputLabel for="valor" value="Valor do saque: " />
-				<p:inputNumber id="valor" value="${usuarioController.valor}" minValue="0" required="true" requiredMessage="Campo valor é necessário">
+				<p:outputLabel for="valor" value="${bundle.SaqueValor}" />
+				<p:inputNumber id="valor" value="${usuarioController.valor}" minValue="0" required="true" requiredMessage="${bundle.SaqueValorRequired}">
 					<p:ajax update="cpmf" />
 				</p:inputNumber>
 
-				<p:outputLabel for="cpmf" value="Valor CPMF: " rendered="${usuarioController.renderer}" />
+				<p:outputLabel for="cpmf" value="${bundle.SaqueValorCPMF}" rendered="${usuarioController.renderer}" />
 				<h:outputText id="cpmf" value="${usuarioController.valorCPMF}" rendered="${usuarioController.renderer}"/>
 			</h:panelGrid>
 			<p:messages />

@@ -9,23 +9,23 @@
     <ui:define name="conteudo">
 		<h:form>
 			<h:panelGrid columns="2" cellpadding="5">
-				<p:outputLabel value="Saldo da conta:" /> 
+				<p:outputLabel value="${bundle.ContaSaldo}" /> 
 				<p:outputLabel id="saldo" value="${usuarioController.contaAutenticada.saldo}"> 
 					<f:convertNumber maxFractionDigits="2" />
 				</p:outputLabel>
 
-				<p:outputLabel for="id" value="Id da conta destino: " />
-				<p:inputNumber id="id" value="${usuarioController.idContaDestino}" decimalPlaces="0" minValue="0" required="true" requiredMessage="Campo Conta de destino é obrigatorio">
+				<p:outputLabel for="id" value="${bundle.TransferenciaIdDestino}" />
+				<p:inputNumber id="id" value="${usuarioController.idContaDestino}" decimalPlaces="0" minValue="0" required="true" requiredMessage="${bundle.TransferenciaIdDestinoRequired}">
 					<p:ajax update="nomeDestino" />
 				</p:inputNumber>
 
-				<p:outputLabel value="Conta destino: " /> <p:outputLabel id="nomeDestino" value="${usuarioController.nomeContaDestino}" />
+				<p:outputLabel value="${bundle.TransferenciaContaDestino}" /> <p:outputLabel id="nomeDestino" value="${usuarioController.nomeContaDestino}" />
 
-				<p:outputLabel for="valor" value="Valor da transferencia: " />
-				<p:inputNumber id="valor" value="${usuarioController.valor}" minValue="0" required="true" requiredMessage="Valor de transferencia é obrigatório" />
+				<p:outputLabel for="valor" value="${bundle.TransferenciaValor}" />
+				<p:inputNumber id="valor" value="${usuarioController.valor}" minValue="0" required="true" requiredMessage="${bundle.TransferenciaValorRequired}" />
 			</h:panelGrid>
 				<p:messages />
-				<p:commandButton value="Transferir" action="${usuarioController.transferir()}" update="@form saldo"/>
+				<p:commandButton value="${bundle.TransferenciaBotao}" action="${usuarioController.transferir()}" update="@form saldo"/>
 		</h:form>
     </ui:define>
 

@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -13,36 +14,38 @@
     </h:head>
 
     <h:body style="display: flex">
-        <p:growl id="growl" life="3000" />
+		<f:view locale="${localeControllers.locale}">
+			<p:growl id="growl" life="3000" />
 
-        <div id="left">
-			<h:form id="menuForm">
-				<p:menu toggleable="true">
-					<p:submenu label="CRUD">
-						<p:menuitem outcome="/crudCorrente/List" value="CRUD Conta Corrente"/>
-						<p:menuitem outcome="/crudEspecial/List" value="CRUD Conta Especial"/>
-						<p:menuitem outcome="/crudPoupanca/List" value="CRUD Conta Poupança"/>
-					</p:submenu>
-					<p:menuitem value="Sair" ajax="false" action="${usuarioController.deslogar()}" />
-				</p:menu>
+			<div id="left">
+				<h:form id="menuForm">
+					<p:menu toggleable="true">
+						<p:submenu label="CRUD">
+							<p:menuitem outcome="/crudCorrente/List" value="${bundle.MenuAdminCrudCorrente}"/>
+							<p:menuitem outcome="/crudEspecial/List" value="${bundle.MenuAdminCrudEspecial}"/>
+							<p:menuitem outcome="/crudPoupanca/List" value="${bundle.MenuAdminCrudPoupanca}"/>
+						</p:submenu>
+						<p:menuitem value="${MenuSairButton}" ajax="false" action="${usuarioController.deslogar()}" />
+					</p:menu>
+				</h:form>
+			</div>
+			<div id="conteudo" class="left_content">
+				<ui:insert name="conteudo"></ui:insert>
+			</div>
+
+
+			<h:form>
+				<p:outputLabel value="${bundle.CadastrarAdminTitle}" />
+				<p:panelGrid columns="2">
+					<p:outputLabel value="${bundle.CadastrarAdminUsuario}" />
+					<p:inputText id="usuario" value="${ademirController.conta.nome}" required="true" requiredMessage="${bundle.CadastrarAdminUsuarioRequired}" /> 
+					<p:outputLabel value="${bundle.CadastrarAdminSenha}" />
+					<p:inputText id="senha" value="${ademirController.conta.senha}" required="true" requiredMessage="${bundle.CadastrarAdminSenhaRequired}" />
+					
+				</p:panelGrid>
+				<p:commandButton value="${bundle.CadastrarAdminBotao}" action="${ademirController.cadastrarAdemir()}" />
 			</h:form>
-        </div>
-        <div id="conteudo" class="left_content">
-            <ui:insert name="conteudo"></ui:insert>
-        </div>
-
-
-        <h:form>
-			<h1>Cadastrar admin</h1>
-			<p:panelGrid columns="2">
-				Usuario
-				<p:inputText id="usuario" value="${ademirController.conta.nome}" required="true" requiredMessage="Campo usuario é necessário" /> 
-				Senha
-				<p:inputText id="senha" value="${ademirController.conta.senha}" required="true" requiredMessage="Campo senha é necessário" />
-				
-			</p:panelGrid>
-			<p:commandButton value="Logar" action="${ademirController.cadastrarAdemir()}" />
-        </h:form>
+		</f:view>
     </h:body>
 
 </html>
