@@ -11,8 +11,6 @@ import br.edu.ifsp.pep.model.Conta;
 import br.edu.ifsp.pep.model.ContaPoupanca;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
